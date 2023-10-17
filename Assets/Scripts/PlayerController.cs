@@ -4,58 +4,79 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Movement Variables
-    public float moveSpeed = 4f;
+
+    #region Variables
+    #region Animation
+    private Animator animator;
+    #endregion
+
+    // Components
+    Rigidbody rb;
+    SpriteRenderer sp;
+
+    // Move
     float inputX;
-    float inputY;
+    float inputZ;
+    float groundOffset = 1.5f;
+    [SerializeField]
+    float moveSpeed = 2;
 
-    // Attached componenets
-    Rigidbody2D rb;
+    public LayerMask terrainLayer;
+    #endregion
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     // Start is called before the first frame update
     void Start()
     {
 
+        rb = GetComponent<Rigidbody>();
+        sp = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        inputX = Input.GetAxisRaw("Horizontal");
-        inputY = Input.GetAxisRaw("Vertical");
-
         Move();
     }
 
-    //  Handle movement input
-    private void Move()
+    private void FixedUpdate()
     {
-        if (inputX < 0)
-        {
-            rb.velocity = moveSpeed * Vector2.left;
-        } else if (inputX > 0)
-        {
-            rb.velocity = moveSpeed * Vector2.right;
-        } else if (inputY < 0)
-        {
-            rb.velocity = moveSpeed * Vector2.down;
+        HandleGroundOffset();
+    }
 
-        } else if (inputY > 0)
+
+    // Uses raycast to calculate ground offset
+    private void HandleGroundOffset()
+    {
+        RaycastHit hit;
+        Vector3 castPos = transform.position;
+        if (Physics.Raycast(castPos, -transform.up, out hit, Mathf.Infinity, terrainLayer))
         {
-            rb.velocity = moveSpeed * Vector2.up;
-        } else
-        {
-            rb.velocity = Vector2.zero;
+            if (hit.collider != null)
+            {
+                Debug.Log(hit.point.y);
+                Vector3 movePos = transform.position;
+                movePos.y = hit.point.y + groundOffset;
+                transform.position = movePos;
+
+            }
         }
     }
 
-    public void Die()
+    // Handles character movement on x and z axis
+    private void Move()
     {
-        Destroy(this.gameObject);
+        // update inputX and inputY and move character
+        inputX = Input.GetAxisRaw("Horizontal");
+        inputZ = Input.GetAxisRaw("Vertical");
+
+        Vector3 moveDirection = new Vector3(inputX, rb.velocity[1], inputZ);
+        rb.velocity = moveDirection * moveSpeed;
+        sp.flipX = inputX > 0 ? false : true; // tenary operator for flipping sprite horizontally
+
+        // updating arguments for move animations
+        animator.SetFloat("inputX", inputX);
+        animator.SetFloat("inputZ", inputZ);
     }
 }
