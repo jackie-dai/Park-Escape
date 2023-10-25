@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // Components
     Rigidbody rb;
     SpriteRenderer sp;
+    [SerializeField] GameObject interactCollider;
 
     // Move
     float inputX;
@@ -32,12 +33,18 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         sp = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        NullCheck(interactCollider);
     }
     
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ActivateInteract();
+        }
         Move();
+        HandleCollider();
     }
 
     private void FixedUpdate()
@@ -78,5 +85,47 @@ public class PlayerController : MonoBehaviour
         // updating arguments for move animations
         animator.SetFloat("inputX", inputX);
         animator.SetFloat("inputZ", inputZ);
+    }
+
+    private void ActivateInteract()
+    {
+        StartCoroutine(HoldCollider());
+        StopCoroutine(HoldCollider());
+    }
+
+    private void NullCheck(GameObject obj)
+    {
+        if (obj == null)
+        {
+            Debug.Log(obj.name + " not found");
+        }
+    }
+
+    IEnumerator HoldCollider()
+    {
+        interactCollider.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        interactCollider.SetActive(false);
+    }
+
+    // Change direction of collider according to direction player is facing
+    void HandleCollider()
+    {
+        if (inputX > 0)
+        {
+            interactCollider.GetComponent<Interact>().SwitchToRight();
+        }
+        if (inputX < 0)
+        {
+            interactCollider.GetComponent<Interact>().SwitchToLeft();
+        }
+        if (inputZ > 0)
+        {
+            interactCollider.GetComponent<Interact>().SwitchToBack();
+        }
+        if (inputZ < 0)
+        {
+            interactCollider.GetComponent<Interact>().SwitchToForward();
+        }
     }
 }
