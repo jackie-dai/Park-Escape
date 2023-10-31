@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/HorsePuzzle.unity
+    guid: c4cb2ee4392de2b4eba85beaa014f835
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: cdf9ff1de3d3e924ba9781cf1cfafc52
   m_configObjects: {}

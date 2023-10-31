@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4799841919474280349}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TargetLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 4799841920270864563}
   - component: {fileID: 4799841920270864564}
   - component: {fileID: 4799841920270864561}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Horse
-  m_TagString: Untagged
+  m_TagString: Horse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

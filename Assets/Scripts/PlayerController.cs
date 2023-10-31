@@ -15,12 +15,13 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sp;
     [SerializeField] GameObject interactCollider;
 
+    RigidbodyConstraints originalConstraints;
     // Move
     float inputX;
     float inputZ;
     float groundOffset = 1.5f;
     [SerializeField]
-    float moveSpeed = 2;
+    public float moveSpeed = 2;
 
     public LayerMask terrainLayer;
     #endregion
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         sp = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         NullCheck(interactCollider);
+        originalConstraints = rb.constraints;
     }
     
     // Update is called once per frame
@@ -42,6 +44,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             ActivateInteract();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DetectCannon();
         }
         Move();
         HandleCollider();
@@ -52,6 +58,20 @@ public class PlayerController : MonoBehaviour
         HandleGroundOffset();
     }
 
+
+    // called when space is pressed
+    // Detects if cannon is within raycast and fires cannonball if it is
+    void DetectCannon() {
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position, Vector3.one * 2, Vector3.forward);
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform.CompareTag("Cannon"))
+            {
+                Cannon cannon = hit.transform.GetComponent<Cannon>();
+                cannon.MoveCannon();
+            }
+        }
+    }
 
     // Uses raycast to calculate ground offset
     private void HandleGroundOffset()
@@ -127,5 +147,15 @@ public class PlayerController : MonoBehaviour
         {
             interactCollider.GetComponent<Interact>().SwitchToForward();
         }
+    }
+
+    public void CannonModeOn()
+    {
+        rb.constraints = RigidbodyConstraints.FreezePositionZ;
+    }
+
+    public void CannonModeOff()
+    {
+        rb.constraints = originalConstraints;
     }
 }
