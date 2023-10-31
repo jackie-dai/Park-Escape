@@ -14,6 +14,13 @@ public class Interact : MonoBehaviour
             Debug.Log("lever position: " + obj.transform.position);
             obj.Activate();
         }
+
+        if (other.tag == "Cannon")
+        {
+            Debug.Log("Yes, this is a cannon kind sir");
+            Cannon obj = other.gameObject.GetComponent<Cannon>();
+            obj.Activate();
+        }
     }
 
    public void SwitchToRight()

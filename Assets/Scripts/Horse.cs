@@ -23,7 +23,8 @@ public class Horse : MonoBehaviour
         startRot = transform.rotation;
 
         // for determining whether to move towards targetPos or startPos
-        atStartingLocation = true;
+        atStartingLocation = false;
+        transform.position = targetLocation.transform.position;
     }
 
     public void Move()
