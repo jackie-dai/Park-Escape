@@ -6,6 +6,7 @@ public class Interact : MonoBehaviour
 {   
     private void OnTriggerEnter(Collider other)
     {
+        /* ADD NEW IF STATEMENT FOR EACH NEW INTERACTABLE ITEM */
         Debug.Log("start interact  with " + other.tag);
         if (other.tag == "Lever")
         {
@@ -19,6 +20,15 @@ public class Interact : MonoBehaviour
         {
             Debug.Log("Yes, this is a cannon kind sir");
             Cannon obj = other.gameObject.GetComponent<Cannon>();
+            obj.Activate();
+        }
+        if (other.tag == "NPC")
+        {
+            Debug.Log("Start dialogue with NPC");
+        }
+        if (other.tag == "Newspaper")
+        {
+            Newspaper obj = other.gameObject.GetComponent<Newspaper>();
             obj.Activate();
         }
     }
