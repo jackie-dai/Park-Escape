@@ -8,6 +8,11 @@ TagManager:
   - Cannon
   - Horse
   - CannonBall
+  - NPC
+  - Claw
+  - Blade
+  - Toy
+  - Newspaper
   layers:
   - Default
   - TransparentFX
