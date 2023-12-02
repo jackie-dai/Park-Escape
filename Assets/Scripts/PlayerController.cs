@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2;
 
     public LayerMask terrainLayer;
+
+    private int coinCount;
     #endregion
 
 
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         NullCheck(interactCollider);
         originalConstraints = rb.constraints;
+        coinCount = 0;
     }
     
     // Update is called once per frame
@@ -157,5 +160,10 @@ public class PlayerController : MonoBehaviour
     public void CannonModeOff()
     {
         rb.constraints = originalConstraints;
+    }
+
+    public int ReturnCoinAmount()
+    {
+        return coinCount;
     }
 }

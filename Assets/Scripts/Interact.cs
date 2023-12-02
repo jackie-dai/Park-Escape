@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Interact : MonoBehaviour
 {   
@@ -24,12 +25,22 @@ public class Interact : MonoBehaviour
         }
         if (other.tag == "NPC")
         {
+            other.gameObject.GetComponent<Cat>().Activate();
             Debug.Log("Start dialogue with NPC");
         }
         if (other.tag == "Newspaper")
         {
             Newspaper obj = other.gameObject.GetComponent<Newspaper>();
             obj.Activate();
+        }
+        if (other.tag == "ClawBooth")
+        {
+            SceneManager.LoadScene("ClawMachine");
+        }
+
+        if (other.tag == "Hangman")
+        {
+            SceneManager.LoadScene("Hangman");
         }
     }
 

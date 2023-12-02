@@ -1,0 +1,37 @@
+﻿title: Start
+tags:
+---
+Cat: Meow
+Boy: Why is there a cat here?
+Cat: meow meow meow?
+Boy: huh?
+Cat: meow meow meow meow meow
+    ->meow mew meow
+        <<jump Yes>>
+    ->No
+        <<jump No>>
+===
+
+title: Yes
+---
+Cat: follow me meow
+<<move_to_booth Cat>>
+<<jump Booth>>
+===
+
+title: No
+---
+Cat: bruh
+===
+
+
+
+title: Booth
+---
+Cat: please stop following meow
+Boy: Where am I?
+Cat: In an amusement park meow
+===
+
+
+

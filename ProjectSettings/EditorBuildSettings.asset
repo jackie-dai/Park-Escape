@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WinScreen.unity
     guid: cdf9ff1de3d3e924ba9781cf1cfafc52
+  - enabled: 1
+    path: Assets/Scenes/ClawMachine.unity
+    guid: a46709aa0e9429642b1587acf8a68ff8
+  - enabled: 1
+    path: Assets/Scenes/Hangman.unity
+    guid: 5189958caff08404a9acf323357a6aa9
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: 58ac159f256017043a2408bf25ec51d3
   m_configObjects: {}
