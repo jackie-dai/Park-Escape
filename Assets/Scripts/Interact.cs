@@ -37,6 +37,11 @@ public class Interact : MonoBehaviour
         {
             SceneManager.LoadScene("ClawMachine");
         }
+
+        if (other.tag == "Hangman")
+        {
+            SceneManager.LoadScene("Hangman");
+        }
     }
 
    public void SwitchToRight()
