@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +11,9 @@ public class PlayerController : MonoBehaviour
     #region Variables
     #region Animation
     private Animator animator;
+    [SerializeField]
+    private Sprite frontSprite;
+  
     #endregion
 
     // Components
@@ -26,6 +32,12 @@ public class PlayerController : MonoBehaviour
     public LayerMask terrainLayer;
 
     private int coinCount;
+    private bool inCannonMode;
+
+    [SerializeField]
+    private CinemachineVirtualCamera mainCamera;
+
+    private int balloonCount = 0;
     #endregion
 
 
@@ -38,7 +50,9 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         NullCheck(interactCollider);
         originalConstraints = rb.constraints;
-        coinCount = 0;
+        coinCount = 2;
+        inCannonMode = false;
+      
     }
     
     // Update is called once per frame
@@ -48,12 +62,13 @@ public class PlayerController : MonoBehaviour
         {
             ActivateInteract();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DetectCannon();
-        }
         Move();
         HandleCollider();
+
+        if (balloonCount >= 12)
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
 
     private void FixedUpdate()
@@ -70,8 +85,8 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.transform.CompareTag("Cannon"))
             {
-                Cannon cannon = hit.transform.GetComponent<Cannon>();
-                cannon.MoveCannon();
+                //Cannon cannon = hit.transform.GetComponent<Cannon>();
+                //cannon.MoveCannon();
             }
         }
     }
@@ -85,7 +100,6 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                Debug.Log(hit.point.y);
                 Vector3 movePos = transform.position;
                 movePos.y = hit.point.y + groundOffset;
                 transform.position = movePos;
@@ -97,17 +111,29 @@ public class PlayerController : MonoBehaviour
     // Handles character movement on x and z axis
     private void Move()
     {
-        // update inputX and inputY and move character
-        inputX = Input.GetAxisRaw("Horizontal");
-        inputZ = Input.GetAxisRaw("Vertical");
-
-        Vector3 moveDirection = new Vector3(inputX, rb.velocity[1], inputZ);
-        rb.velocity = moveDirection * moveSpeed;
-        sp.flipX = inputX > 0 ? false : true; // tenary operator for flipping sprite horizontally
+      
 
         // updating arguments for move animations
-        animator.SetFloat("inputX", inputX);
-        animator.SetFloat("inputZ", inputZ);
+        if (!InCannonMode())
+        { 
+            // update inputX and inputY and move character
+            inputX = Input.GetAxisRaw("Horizontal");
+            inputZ = Input.GetAxisRaw("Vertical");
+
+            Vector3 moveDirection = new Vector3(inputX, rb.velocity[1], inputZ);
+            rb.velocity = moveDirection * moveSpeed;
+            sp.flipX = inputX > 0 ? false : true; // tenary operator for flipping sprite horizontally
+            animator.SetFloat("inputX", inputX);
+            animator.SetFloat("inputZ", inputZ);
+            animator.enabled = true;
+        } else
+        {
+            animator.enabled = false;
+            sp.sprite = frontSprite;
+            inputX = Input.GetAxisRaw("Horizontal");
+            rb.velocity = new Vector3(inputX * moveSpeed, rb.velocity[1], rb.velocity[2]);
+
+        }
     }
 
     private void ActivateInteract()
@@ -154,16 +180,33 @@ public class PlayerController : MonoBehaviour
 
     public void CannonModeOn()
     {
-        rb.constraints = RigidbodyConstraints.FreezePositionZ;
+        //rb.constraints = RigidbodyConstraints.FreezeAll;
+        //mainCamera.gameObject.SetActive(false);
+        //rb.constraints = RigidbodyConstraints.FreezePositionZ;
+        inCannonMode = true;
     }
 
     public void CannonModeOff()
     {
-        rb.constraints = originalConstraints;
+        //rb.constraints = originalConstraints;
+        //mainCamera.gameObject.SetActive(true);
+        inCannonMode = false;
+        Debug.Log("Cannon mode off");
+    }
+
+    public bool InCannonMode()
+    {
+        return inCannonMode;
     }
 
     public int ReturnCoinAmount()
     {
         return coinCount;
+    }
+
+    public void AddBalloonCount(int amount)
+    {
+        balloonCount += amount;
+        Debug.Log("Ballon count: " + balloonCount);
     }
 }

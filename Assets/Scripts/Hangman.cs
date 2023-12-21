@@ -15,8 +15,13 @@ public class Hangman : MonoBehaviour
     private char[] userWord;
     [SerializeField] 
     private TMP_InputField userInput;
+
     [SerializeField]
     private TextMeshProUGUI keyword_UI;
+
+    [SerializeField]
+    private TextMeshProUGUI lettersGuessed_UI;
+
     [SerializeField]
     private Canvas inputCanvas;
     private bool guessed = false;
@@ -45,30 +50,30 @@ public class Hangman : MonoBehaviour
         
         guessed = false;
         userGuess = '\0';
-        totalGuessesRemaining = keyword.Length;
         guessesRemaining = 5;
-        guessedLetters = new char[guessesRemaining];
+        totalGuessesRemaining = keyword.Length + guessesRemaining;
+        guessedLetters = new char[totalGuessesRemaining];
         FillArrayWith_(userWord);
     }
 
 
     private void Update()
     {
-
         WaitForGuess();
         keyword_UI.text = new string(userWord);
+        lettersGuessed_UI.text = new string(guessedLetters);
     }
 
     private void WaitForGuess()
     {
         if (guessed)
         {
-            Debug.Log("recieved " + userGuess);
+            //Debug.Log("recieved " + userGuess);
             guessed = false;
             CheckUserGuess(userGuess);
         } else
         {
-            Debug.Log("Waiting for guess");
+            //Debug.Log("Waiting for guess");
         }  
      
     }
@@ -78,9 +83,9 @@ public class Hangman : MonoBehaviour
         int indexOfGuess = isLetterInWord(guess, keyword);
         if (indexOfGuess >= 0) 
         {
-            totalGuessesRemaining -= 1;
             userWord[indexOfGuess * 2] = guess;
             correctCounter += 1;
+            Debug.Log("correct counter: " + correctCounter);
             if (correctCounter >= keyword.Length)
             {
                 Win();
@@ -90,7 +95,7 @@ public class Hangman : MonoBehaviour
             Debug.Log("Current User Word: " + new string(userWord));
         } else
         {
-            Debug.Log("why must you so stupid");
+            Debug.Log("why must you be so stupid");
             guessesRemaining -= 1;
             rope.MoveDown();
             if (guessesRemaining <= 0)
@@ -109,7 +114,8 @@ public class Hangman : MonoBehaviour
         {
             
             guessedLetters[guessedLetters.Length - totalGuessesRemaining] = userGuess;
-           
+            Debug.Log("index: " + (guessedLetters.Length - totalGuessesRemaining));
+            totalGuessesRemaining -= 1;
             guessed = true;
         }
         else
@@ -148,6 +154,6 @@ public class Hangman : MonoBehaviour
    private void Win()
     {
         Debug.Log("WINNER CHICKEN DINNER DINNER");
-        SceneManager.LoadScene("Jackie");
+        SceneManager.LoadScene("Main");
     }
 }

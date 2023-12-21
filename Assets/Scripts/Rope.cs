@@ -32,7 +32,6 @@ public class Rope : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = targetLocation;
      
     }
 

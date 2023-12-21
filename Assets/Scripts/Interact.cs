@@ -4,7 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Interact : MonoBehaviour
-{   
+{
+    private PlayerController player;
+
+    void Awake()
+    {
+        player = transform.parent.GetComponent<PlayerController>();
+        if (player == null)
+        {
+            Debug.Log("Unable to find player");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         /* ADD NEW IF STATEMENT FOR EACH NEW INTERACTABLE ITEM */
@@ -22,6 +33,13 @@ public class Interact : MonoBehaviour
             Debug.Log("Yes, this is a cannon kind sir");
             Cannon obj = other.gameObject.GetComponent<Cannon>();
             obj.Activate();
+            if (player.InCannonMode())
+            {
+                player.CannonModeOff();
+            } else
+            {
+                player.CannonModeOn();
+            }
         }
         if (other.tag == "NPC")
         {
@@ -35,12 +53,25 @@ public class Interact : MonoBehaviour
         }
         if (other.tag == "ClawBooth")
         {
-            SceneManager.LoadScene("ClawMachine");
+            if (player.ReturnCoinAmount() > 0)
+            {
+                SceneManager.LoadScene("ClawMachine");
+            }
+            else
+            {
+                Debug.Log("Sorry it appears you are poor asf");
+            }
+            Debug.Log("Coin amount: " + player.ReturnCoinAmount());
         }
 
         if (other.tag == "Hangman")
         {
             SceneManager.LoadScene("Hangman");
+        } 
+        
+            if (other.tag == "BalloonBooth")
+        {
+            SceneManager.LoadScene("Balloons");
         }
     }
 

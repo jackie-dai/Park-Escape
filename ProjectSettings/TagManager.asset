@@ -17,6 +17,12 @@ TagManager:
   - HangmanBooth
   - Hangman
   - Fire
+  - Balloonn
+  - Red
+  - Yellow
+  - Blue
+  - Balloon
+  - BalloonBooth
   layers:
   - Default
   - TransparentFX

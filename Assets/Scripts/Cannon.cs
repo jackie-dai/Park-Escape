@@ -16,6 +16,9 @@ public class Cannon : MonoBehaviour
 
     bool canMove = false;
 
+    private float timeUntilNextShot;
+    private float cooldown;
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -25,6 +28,10 @@ public class Cannon : MonoBehaviour
         }
         playerScript = player.GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
+        timeUntilNextShot = 2f;
+        cooldown = timeUntilNextShot;
+
+        
     }
 
     // Spawns cannonball at tip of cannon and calls their launch function
@@ -35,6 +42,16 @@ public class Cannon : MonoBehaviour
         newBall.Launch();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && cooldown < 0)
+        {
+            Fire();
+            cooldown = timeUntilNextShot;
+        }
+        cooldown -= Time.deltaTime;
+
+    }
 
     void FixedUpdate()
     {
@@ -47,17 +64,10 @@ public class Cannon : MonoBehaviour
 
     public void Activate()
     {
-        if (!canMove)
-        {
-            Fire();
-        }
+        HandleMove();
     }
 
     // Call this function inside of interact script
-    public void MoveCannon()
-    {
-        HandleMove();
-    }
 
     private void HandleMove()
     {

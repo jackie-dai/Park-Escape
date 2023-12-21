@@ -29,12 +29,21 @@ public class CannonBall : MonoBehaviour
         rb.velocity = (launchDirection + arc).normalized * launchSpeed;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Horse")) // Assuming you have walls tagged as "Wall"
         {
             // Launch the ball along the Z-axis.
             rb.AddForce(Vector3.forward * launchSpeed, ForceMode.VelocityChange);
         }
+    }*/
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.tag == "Toy")
+        {
+            Debug.Log("You suck jesus christ");
+        }
+        Debug.Log("Hitting : " + other.gameObject.tag);
     }
 }
