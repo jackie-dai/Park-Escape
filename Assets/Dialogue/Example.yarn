@@ -16,7 +16,6 @@ title: Yes
 ---
 Cat: follow me meow
 <<move_to_booth Cat>>
-<<jump Booth>>
 ===
 
 title: No
@@ -24,14 +23,6 @@ title: No
 Cat: bruh
 ===
 
-
-
-title: Booth
----
-Cat: please stop following meow
-Boy: Where am I?
-Cat: In an amusement park meow
-===
 
 
 

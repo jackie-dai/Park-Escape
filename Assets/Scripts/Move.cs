@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 public class Move : MonoBehaviour
 {
     private float moveSpeed = 2f;
+    private float invincibilityTimer;
+    private float timeInvincible = 1f;
+
+    void Awake()
+    {
+        invincibilityTimer = timeInvincible;
+    }
 
     void Update()
     {
@@ -14,11 +21,18 @@ public class Move : MonoBehaviour
             transform.position = new Vector3(441f, transform.position.y, transform.position.z);
         }
         transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
+
+  
+        if (invincibilityTimer > 0)
+        {
+            invincibilityTimer -= Time.deltaTime;
+        }
+        
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "CannonBall")
+        if (other.tag == "CannonBall" && invincibilityTimer <= 0)
         {
             SceneManager.LoadScene("LoseScreen");
         }

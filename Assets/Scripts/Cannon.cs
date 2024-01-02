@@ -18,6 +18,7 @@ public class Cannon : MonoBehaviour
 
     private float timeUntilNextShot;
     private float cooldown;
+    private MouseLook lookScript;
 
     void Start()
     {
@@ -27,9 +28,11 @@ public class Cannon : MonoBehaviour
             Debug.Log("Cannon: Player not found");
         }
         playerScript = player.GetComponent<PlayerController>();
+        lookScript = GetComponent<MouseLook>();
         rb = GetComponent<Rigidbody>();
         timeUntilNextShot = 2f;
         cooldown = timeUntilNextShot;
+
 
         
     }
@@ -39,7 +42,8 @@ public class Cannon : MonoBehaviour
     {
         CannonBall newBall = Instantiate(ball, transform);
         newBall.transform.localPosition = new Vector3(0, 1.5f, 0);
-        newBall.Launch();
+        Debug.Log("angle: " + transform.localRotation);
+        newBall.Launch(transform.localRotation.eulerAngles);
     }
 
     void Update()
@@ -74,11 +78,13 @@ public class Cannon : MonoBehaviour
         if (!canMove)
         {
             //StartMove();
-            canMove = true;
+            //canMove = true;
+            lookScript.enabled = true;
         } else
         {
             //EndMove();
-            canMove = false;
+            //canMove = false;
+            lookScript.enabled = false;
         }
     }
 

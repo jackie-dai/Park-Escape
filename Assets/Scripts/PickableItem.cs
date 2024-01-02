@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Toy : MonoBehaviour
+public class PickableItem : MonoBehaviour
 {
     #region Variables
     private Rigidbody rb;

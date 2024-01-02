@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class Rope : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class Rope : MonoBehaviour
     }
 
     public void MoveDown()
-    { 
+    {
         StartCoroutine(Move(new Vector3(transform.position.x, transform.position.y - incrementalPosition, transform.position.z)));
     }
 
@@ -32,7 +33,6 @@ public class Rope : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-     
-    }
 
+    }
 }

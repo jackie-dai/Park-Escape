@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4975695092378504888}
   - component: {fileID: 4975695092378504889}
   - component: {fileID: 4975695092378504886}
-  - component: {fileID: 1520980983583892097}
   - component: {fileID: 8606478142970641592}
   - component: {fileID: 1125480401459326644}
   m_Layer: 7
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4975695092378504884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 17.56, y: 2.38, z: 10.67}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,22 +99,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1520980983583892097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4975695092378504884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22d633d812904d4ab75b365e2c44fda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchSpeed: 60
-  launchAngle: 0
-  launchArc: 0.2
-  bounceIntensity: 4
 --- !u!54 &8606478142970641592
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -124,9 +107,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4975695092378504884}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 1.03
+  m_Drag: 0.21
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

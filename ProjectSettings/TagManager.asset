@@ -23,6 +23,7 @@ TagManager:
   - Blue
   - Balloon
   - BalloonBooth
+  - Coin
   layers:
   - Default
   - TransparentFX

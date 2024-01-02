@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class Interact : MonoBehaviour
 {
     private PlayerController player;
+    public PlayerData playerData;
+    public DialogueRunner coinDialogue;
 
     void Awake()
     {
@@ -53,15 +56,15 @@ public class Interact : MonoBehaviour
         }
         if (other.tag == "ClawBooth")
         {
-            if (player.ReturnCoinAmount() > 0)
+            if (playerData.playerCoins >= 3)
             {
                 SceneManager.LoadScene("ClawMachine");
             }
             else
             {
-                Debug.Log("Sorry it appears you are poor asf");
+                coinDialogue.gameObject.SetActive(true);
             }
-            Debug.Log("Coin amount: " + player.ReturnCoinAmount());
+            Debug.Log("Coin amount: " + playerData.playerCoins);
         }
 
         if (other.tag == "Hangman")
@@ -93,5 +96,11 @@ public class Interact : MonoBehaviour
     public void SwitchToBack()
     {
         transform.localPosition = new Vector3(0, transform.localPosition.y, 0.5f);
+    }
+    
+
+    public void TurnOffCoinDiaglogue()
+    {
+        coinDialogue.gameObject.SetActive(true);
     }
 }

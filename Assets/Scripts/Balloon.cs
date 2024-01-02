@@ -4,29 +4,35 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
+    public BalloonManager balloonManager;
     private string[] colorOptions = { "Red", "Blue", "Yellow" };
     private float moveSpeed;
     private Vector3 startPosition;
-    private string color;
+    private bool destroyed = false;
     [SerializeField]
     public Sprite[] balloonSprites = new Sprite[3];
     private SpriteRenderer sp;
-    [SerializeField]
-    private PlayerController player;
-    
-
+    [SerializeField] private GameObject toyPrefab;
+    private string color;
+    public string Color
+    {
+        get
+        {
+            return color;
+        }
+    }
 
     void Awake()
     {
-        player = player.gameObject.GetComponent<PlayerController>();
+        
         sp = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         System.Random rand = new System.Random();
         int randomNum = rand.Next(colorOptions.Length);
         color = colorOptions[randomNum];
         sp.sprite = balloonSprites[randomNum];
-        //transform.gameObject.tag = color;
-
-
+        transform.gameObject.tag = "Balloon";
+        balloonManager.AddColorCount(randomNum, 1);
+        balloonManager.AddBalloon(1);
         moveSpeed = 2f;
         startPosition = new Vector3(441f, transform.position.y, transform.position.z);
     }
@@ -42,18 +48,34 @@ public class Balloon : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * moveSpeed * Time.deltaTime); // Vec
     }
 
     void OnTriggerEnter(Collider other) 
     {
-        Debug.Log("adsf");
-        if (other.tag == "CannonBall")
+       
+        if (other.tag == "CannonBall" && !destroyed)
         {
-            player.AddBalloonCount(1);
+           
+            if (balloonManager.CurrentColor != color)
+            {
+                Debug.Log("entered1");
+                Instantiate(toyPrefab, transform.position, Quaternion.identity);
+            } 
+            else
+            {
+                Debug.Log("entered2");
+                balloonManager.ReduceCount();
+            }
+            Debug.Log("done");
+            destroyed = true;
             Destroy(transform.gameObject);
         }
     }
+
+
+
+    
 
 /*    void OnTriggerEnter(Collider other)
     {

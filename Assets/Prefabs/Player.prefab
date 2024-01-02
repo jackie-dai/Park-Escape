@@ -151,11 +151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b6b295a231fee4a9044c0c391cf6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  frontSprite: {fileID: 0}
   interactCollider: {fileID: 6379393709353698518}
   moveSpeed: 6
   terrainLayer:
     serializedVersion: 2
     m_Bits: 64
+  mainCamera: {fileID: 0}
 --- !u!1 &6379393709316627515
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 501103309b74869448e31e34e4d5888a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: d26d0eb20cf5ed44f8803bbe410ebbec, type: 2}
 --- !u!212 &6379393709353698514
 SpriteRenderer:
   m_ObjectHideFlags: 0

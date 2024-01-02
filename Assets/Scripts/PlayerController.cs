@@ -64,11 +64,6 @@ public class PlayerController : MonoBehaviour
         }
         Move();
         HandleCollider();
-
-        if (balloonCount >= 12)
-        {
-            SceneManager.LoadScene("Main");
-        }
     }
 
     private void FixedUpdate()
@@ -202,11 +197,5 @@ public class PlayerController : MonoBehaviour
     public int ReturnCoinAmount()
     {
         return coinCount;
-    }
-
-    public void AddBalloonCount(int amount)
-    {
-        balloonCount += amount;
-        Debug.Log("Ballon count: " + balloonCount);
     }
 }

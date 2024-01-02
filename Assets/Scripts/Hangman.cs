@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 
 public class Hangman : MonoBehaviour
@@ -32,6 +33,10 @@ public class Hangman : MonoBehaviour
     [SerializeField]
     private GameObject doll;
     private Rope rope;
+
+    public DialogueRunner dialogueRunner;
+
+
     #endregion
     // Start is called before the first frame update
     void Awake()
@@ -151,9 +156,16 @@ public class Hangman : MonoBehaviour
         }
     }
 
-   private void Win()
+    [YarnCommand("display_input")]
+    public void DisplayInput()
+    {
+        inputCanvas.transform.gameObject.SetActive(true);
+        Debug.Log("Dialogue finished");
+    }
+
+    private void Win()
     {
         Debug.Log("WINNER CHICKEN DINNER DINNER");
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Main_Coin");
     }
 }

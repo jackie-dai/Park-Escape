@@ -6,4 +6,5 @@ Cat:  Oh wait, that’s you!
 Cat: Guess the correct letters for your words so that doll over there doesn’t have anything happen to it. 
 Cat: What would happen, you ask?
 Cat:  Well… let’s not find out…
+<<display_input Hangman>>
 ===

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 3650cb9289d3d7e4684affcb3d5f22ad
+  - enabled: 1
     path: Assets/Scenes/Balloons.unity
     guid: c4cb2ee4392de2b4eba85beaa014f835
   - enabled: 1
@@ -21,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LoseScreen.unity
     guid: 58ac159f256017043a2408bf25ec51d3
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 3650cb9289d3d7e4684affcb3d5f22ad
+    path: Assets/Scenes/Main_Coin.unity
+    guid: badc6fa7b99bf5845b22b311dd6149f9
   m_configObjects: {}

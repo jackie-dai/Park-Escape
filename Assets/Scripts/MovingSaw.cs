@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MovingSaw : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class MovingSaw : MonoBehaviour
         if (other.tag == "Toy")
         {
             Destroy(other.gameObject);
+            SceneManager.LoadScene("LoseScreen");
         }
     }
 }
