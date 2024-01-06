@@ -4,6 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Yarn.Unity;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private CinemachineVirtualCamera mainCamera;
 
     private int balloonCount = 0;
+    private bool isCatDialogueOn; 
     #endregion
 
 
@@ -52,6 +54,7 @@ public class PlayerController : MonoBehaviour
         originalConstraints = rb.constraints;
         coinCount = 2;
         inCannonMode = false;
+        isCatDialogueOn = false;
       
     }
     
@@ -106,28 +109,35 @@ public class PlayerController : MonoBehaviour
     // Handles character movement on x and z axis
     private void Move()
     {
-      
 
-        // updating arguments for move animations
-        if (!InCannonMode())
-        { 
-            // update inputX and inputY and move character
-            inputX = Input.GetAxisRaw("Horizontal");
-            inputZ = Input.GetAxisRaw("Vertical");
+        if (!isCatDialogueOn)
+        {
+            // updating arguments for move animations
+            if (!InCannonMode())
+            {
+                // update inputX and inputY and move character
+                inputX = Input.GetAxisRaw("Horizontal");
+                inputZ = Input.GetAxisRaw("Vertical");
 
-            Vector3 moveDirection = new Vector3(inputX, rb.velocity[1], inputZ);
-            rb.velocity = moveDirection * moveSpeed;
-            sp.flipX = inputX > 0 ? false : true; // tenary operator for flipping sprite horizontally
-            animator.SetFloat("inputX", inputX);
-            animator.SetFloat("inputZ", inputZ);
-            animator.enabled = true;
+                Vector3 moveDirection = new Vector3(inputX, rb.velocity[1], inputZ);
+                rb.velocity = moveDirection * moveSpeed;
+                sp.flipX = inputX > 0 ? false : true; // tenary operator for flipping sprite horizontally
+                animator.SetFloat("inputX", inputX);
+                animator.SetFloat("inputZ", inputZ);
+                animator.enabled = true;
+            }
+            else
+            {
+                animator.enabled = false;
+                sp.sprite = frontSprite;
+                inputX = Input.GetAxisRaw("Horizontal");
+                rb.velocity = new Vector3(inputX * moveSpeed, rb.velocity[1], rb.velocity[2]);
+
+            }
         } else
         {
-            animator.enabled = false;
-            sp.sprite = frontSprite;
-            inputX = Input.GetAxisRaw("Horizontal");
-            rb.velocity = new Vector3(inputX * moveSpeed, rb.velocity[1], rb.velocity[2]);
-
+            animator.SetFloat("inputX", 0);
+            animator.SetFloat("inputZ", 0);
         }
     }
 
@@ -173,20 +183,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [YarnCommand("turn_on_cat_dialogue")]
+    public void turnOnCatDialogue()
+    {
+        isCatDialogueOn = true;
+    }
+
+    [YarnCommand("turn_off_cat_dialogue")]
+    public void turnOffCatDialogue()
+    {
+        isCatDialogueOn = false;
+    }
+
     public void CannonModeOn()
     {
-        //rb.constraints = RigidbodyConstraints.FreezeAll;
-        //mainCamera.gameObject.SetActive(false);
-        //rb.constraints = RigidbodyConstraints.FreezePositionZ;
         inCannonMode = true;
     }
 
     public void CannonModeOff()
     {
-        //rb.constraints = originalConstraints;
-        //mainCamera.gameObject.SetActive(true);
         inCannonMode = false;
-        Debug.Log("Cannon mode off");
     }
 
     public bool InCannonMode()

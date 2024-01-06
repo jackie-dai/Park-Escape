@@ -11,7 +11,7 @@ public class Hangman : MonoBehaviour
 {
     #region Variables
     private char userGuess = '\0';
-    private string[] words = { "late", "life", "death" };
+    private string[] words = { "late", "life", "death", "fear", "demon" };
     private char[] keyword;
     private char[] userWord;
     [SerializeField] 
@@ -160,7 +160,7 @@ public class Hangman : MonoBehaviour
     public void DisplayInput()
     {
         inputCanvas.transform.gameObject.SetActive(true);
-        Debug.Log("Dialogue finished");
+        Debug.Log("Dialogue finished"); 
     }
 
     private void Win()

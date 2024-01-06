@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Yarn.Unity;
 
 public class ClawController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class ClawController : MonoBehaviour
     public GameObject groundLevel;
     private float startingY;
     private bool grappling;
+    private bool dialogueFinished;
 
     #endregion
 
@@ -25,15 +27,19 @@ public class ClawController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         startingY = transform.position.y;
         grappling = false;
+        dialogueFinished = false;
     }
     // Recieve input 
     void FixedUpdate()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
-        //moveY = Input.GetAxisRaw("Vertical");
-        if (!grappling)
+        if (dialogueFinished)
         {
-            Move();
+            moveX = Input.GetAxisRaw("Horizontal");
+            //moveY = Input.GetAxisRaw("Vertical");
+            if (!grappling)
+            {
+                Move();
+            }
         }
     }
 
@@ -86,5 +92,12 @@ public class ClawController : MonoBehaviour
         {
             transform.position = new Vector3(31, transform.position.y, transform.position.z);
         }
+    }
+
+    [YarnCommand("claw_dialogue")]
+
+    public void turnOffDialogue()
+    {
+        dialogueFinished = true;
     }
 }

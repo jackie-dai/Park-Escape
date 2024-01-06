@@ -1,6 +1,8 @@
 ﻿title: Coin
 tags:
 ---
+<<turn_on_cat_dialogue Player>>
 Cat: Meow this machine needs 3 coins to play
 Cat: Please play the other machines to earn coins meow
+<<turn_off_cat_dialogue Player>>
 ===

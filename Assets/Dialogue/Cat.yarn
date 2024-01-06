@@ -1,0 +1,33 @@
+﻿title: Start
+tags:
+---
+<<turn_on_cat_dialogue Player>>
+Cat: Meow
+Boy: Why is there a cat here?
+Cat: meow meow meow?
+Boy: huh?
+Cat: meow meow meow meow meow
+    ->meow mew meow
+        <<jump Yes>>
+    ->No
+        <<jump No>>
+===
+
+title: Yes
+---
+Cat: Welcome!
+Cat: Here, you will have the time of your life venturing through the unknown and seeking a way out. 
+Cat: I will act as your guide and helper, but your smeowrtness and clawverness will be how you get out. Good luck!
+<<move_to_booth Cat>>
+<<turn_off_cat_dialogue Player>>
+===
+
+title: No
+---
+Cat: bruh
+<<turn_off_cat_dialogue Player>>
+===
+
+
+
+
